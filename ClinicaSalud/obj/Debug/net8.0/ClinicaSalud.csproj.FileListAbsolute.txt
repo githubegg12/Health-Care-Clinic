@@ -12,3 +12,4 @@
 /home/Coder/Escritorio/David Vargas Varela_NO BORRAR/ClinicaSalud/ClinicaSalud/obj/Debug/net8.0/ClinicaSalud.pdb
 /home/Coder/Escritorio/David Vargas Varela_NO BORRAR/ClinicaSalud/ClinicaSalud/obj/Debug/net8.0/ClinicaSalud.genruntimeconfig.cache
 /home/Coder/Escritorio/David Vargas Varela_NO BORRAR/ClinicaSalud/ClinicaSalud/obj/Debug/net8.0/ref/ClinicaSalud.dll
+/home/Coder/Escritorio/David Vargas Varela_NO BORRAR/ClinicaSalud/ClinicaSalud/obj/Debug/net8.0/ClinicaSalud.sourcelink.json
