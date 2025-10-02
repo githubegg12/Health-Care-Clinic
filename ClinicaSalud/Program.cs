@@ -5,23 +5,7 @@ using ClinicaSalud.Utils;
 
 List<Patient> patients = new List<Patient>();
 
-patients.Add(new Patient
-{
-    Id = 12345678,
-    Name = "Juan",
-    Lastname = "Pérez",
-    Age = 30,
-    Symptom = "I have cancer"
-});
-
-patients.Add(new Patient
-{
-    Id = 12345678,
-    Name = "Juancho",
-    Lastname = "Pérez",
-    Age = 30,
-    Symptom = "I have cancer"
-});
+patients.Add(new Patient(12345678, "Juan", "Pérez", 30, "I have cancer"));
 
 bool exit = false;
 //Use a while loop so the menu repeats until the user chooses to exit.
