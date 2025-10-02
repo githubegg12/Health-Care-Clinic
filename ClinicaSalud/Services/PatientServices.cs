@@ -13,17 +13,9 @@ public class PatientServices
         string lastname = InputValidator.ReadNonEmptyString("Enter Lastname: ");
         int age = InputValidator.ReadNonNegativeInt("Enter Age: ");
         string symptom = InputValidator.ReadNonEmptyString("Enter Symptom: ");
-
-        Patient newPatient = new Patient
-        {
-            Id = id,
-            Name = name,
-            Lastname = lastname,
-            Age = age,
-            Symptom = symptom
-        };
-
-        list.Add(newPatient);
+        
+        
+        list.Add(new Patient(id,name,lastname,age,symptom));
         Console.WriteLine("\nPatient registered successfully.");
     }
 
