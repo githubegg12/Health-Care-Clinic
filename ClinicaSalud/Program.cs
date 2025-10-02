@@ -7,8 +7,15 @@ using ClinicaSalud.Utils;
 Dictionary<int, Patient> patientDictionary = new Dictionary<int, Patient>();
 List<Patient> patients = new List<Patient>();
 
-var newPatient = new Patient(12345678, "Juan", "Pérez", 30, "I have cancer");
+var newPatient = new Patient("Juan", "Pérez", 30, "I have cancer");
+var newPatient1 = new Patient("Juancho", "Pérez", 30, "I have cancer");
+var newPatient2 = new Patient("Juancha", "Pérez", 30, "I have cancer");
+
+
 patients.Add(newPatient);
+patients.Add(newPatient1);
+patients.Add(newPatient2);
+
 patientDictionary[newPatient.Id] = newPatient;
 
 bool exit = false;

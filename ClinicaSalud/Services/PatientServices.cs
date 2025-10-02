@@ -8,27 +8,30 @@ public class PatientServices
     //Request data through the console and add a new patient to the list.
     public static void PatientRegistration(List<Patient> list)
     {
-        int id = InputValidator.ReadNonNegativeInt("Enter Patient ID: ");
         string name = InputValidator.ReadNonEmptyString("Enter Name: ");
         string lastname = InputValidator.ReadNonEmptyString("Enter Lastname: ");
         int age = InputValidator.ReadNonNegativeInt("Enter Age: ");
         string symptom = InputValidator.ReadNonEmptyString("Enter Symptom: ");
 
-        var patient = new Patient(id, name, lastname, age, symptom);
-        
-        Console.WriteLine("\n--- Add Pets ---");
-        bool addMorePets = true;
-        while (addMorePets)
+   
+        var patient = new Patient( name, lastname, age, symptom);
+        Console.Write("Do you want to add pets for this patient? (Y/N): ");
+        string addPetsResponse = Console.ReadLine();
+        if (addPetsResponse != null && addPetsResponse.Equals("Y", StringComparison.OrdinalIgnoreCase))
         {
-            string petName = InputValidator.ReadNonEmptyString("Enter Pet Name: ");
-            string species = InputValidator.ReadNonEmptyString("Enter Species: ");
-            int petAge = InputValidator.ReadNonNegativeInt("Enter Pet Age: ");
+            Console.WriteLine("\n--- Add Pets ---");
+            bool addMorePets = true;
+            while (addMorePets)
+            {
+                string petName = InputValidator.ReadNonEmptyString("Enter Pet Name: ");
+                string species = InputValidator.ReadNonEmptyString("Enter Species: ");
+                int petAge = InputValidator.ReadNonNegativeInt("Enter Pet Age: ");
 
-            patient.Pets.Add(new Pet(petName, species, petAge));
-
-            Console.Write("Add another pet? (Y/N): ");
-            string addAnother = Console.ReadLine();
-            addMorePets = addAnother.Equals("Y", StringComparison.OrdinalIgnoreCase);
+                patient.Pets.Add(new Pet(petName, species, petAge));
+                Console.Write("Add another pet? (Y/N): ");
+                string addAnother = Console.ReadLine();
+                addMorePets = addAnother.Equals("Y", StringComparison.OrdinalIgnoreCase);
+            }
         }
         list.Add(patient);
         Console.WriteLine("\nPatient registered successfully.");
