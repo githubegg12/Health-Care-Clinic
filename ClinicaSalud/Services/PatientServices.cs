@@ -13,9 +13,24 @@ public class PatientServices
         string lastname = InputValidator.ReadNonEmptyString("Enter Lastname: ");
         int age = InputValidator.ReadNonNegativeInt("Enter Age: ");
         string symptom = InputValidator.ReadNonEmptyString("Enter Symptom: ");
+
+        var patient = new Patient(id, name, lastname, age, symptom);
         
-        
-        list.Add(new Patient(id,name,lastname,age,symptom));
+        Console.WriteLine("\n--- Add Pets ---");
+        bool addMorePets = true;
+        while (addMorePets)
+        {
+            string petName = InputValidator.ReadNonEmptyString("Enter Pet Name: ");
+            string species = InputValidator.ReadNonEmptyString("Enter Species: ");
+            int petAge = InputValidator.ReadNonNegativeInt("Enter Pet Age: ");
+
+            patient.Pets.Add(new Pet(petName, species, petAge));
+
+            Console.Write("Add another pet? (Y/N): ");
+            string addAnother = Console.ReadLine();
+            addMorePets = addAnother.Equals("Y", StringComparison.OrdinalIgnoreCase);
+        }
+        list.Add(patient);
         Console.WriteLine("\nPatient registered successfully.");
     }
 
@@ -35,6 +50,14 @@ public class PatientServices
         foreach (var patient in list)
         {
             Console.WriteLine($"{patient.Id,-10} | {patient.Name,-15} | {patient.Lastname,-15} | {patient.Age,-5} | {patient.Symptom,-30}");
+            if (patient.Pets.Count > 0)
+            {
+                Console.WriteLine($"  Pets:");
+                foreach (var pet in patient.Pets)
+                {
+                    Console.WriteLine($"    - {pet.Name}, {pet.Species}, {pet.Age} years old");
+                }
+            }
         }
     }
 
@@ -65,23 +88,25 @@ public class PatientServices
     public static void DeletePatient(List<Patient> list, string name)
     {
         var found = list
-               .Where(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
-               .ToList();
+            .Where(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+            .ToList();
 
         if (found.Count == 0)
         {
             Console.WriteLine($"\nNo patient found with name '{name}'.");
             return;
         }
+
         Console.WriteLine("\nDo you want to delete these patient(s)? (Y/N): ");
         string confirm = Console.ReadLine();
 
-        if (confirm.Equals("Y", StringComparison.OrdinalIgnoreCase))
+        if (confirm != null && confirm.Equals("Y", StringComparison.OrdinalIgnoreCase))
         {
             foreach (var patient in found)
             {
                 list.Remove(patient);
             }
+
             Console.WriteLine("\nPatient(s) deleted successfully.");
         }
         else
@@ -90,4 +115,23 @@ public class PatientServices
         }
     }
 
+    public static void AddPetToPatient(List<Patient> patients)
+    {
+        int id = InputValidator.ReadNonNegativeInt("Enter Patient ID: ");
+        var patient = patients.FirstOrDefault(p => p.Id == id);
+
+        if (patient == null)
+        {
+            Console.WriteLine("Patient not found.");
+            return;
+        }
+
+        string petName = InputValidator.ReadNonEmptyString("Enter Pet Name: ");
+        string species = InputValidator.ReadNonEmptyString("Enter Species: ");
+        int petAge = InputValidator.ReadNonNegativeInt("Enter Pet Age: ");
+
+        patient.Pets.Add(new Pet(petName, species, petAge));
+        Console.WriteLine("Pet added successfully.");
+    }
+    
 }

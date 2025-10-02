@@ -11,5 +11,6 @@ public class Patient (int id, string name, string lastname, int age, string symp
     public int Age { get; set; } = age;
     public string Symptom { get; set; } = symptom;
     
+    public List<Pet> Pets { get; set; } = new();
 }
 

@@ -17,9 +17,10 @@ public static class Menu
             Console.WriteLine("2. Patient List");
             Console.WriteLine("3. Patient Search");
             Console.WriteLine("4. Delete Patient");
-            Console.WriteLine("5. Exit \n");
+            Console.WriteLine("5. Add Pet to Patient");
+            Console.WriteLine("6. Exit \n");
 
-            Console.Write("Select an option (1-5): ");
+            Console.Write("Select an option (1-6): ");
     }
 
     public static void Pause()

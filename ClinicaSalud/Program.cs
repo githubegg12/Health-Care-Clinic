@@ -3,9 +3,13 @@ using ClinicaSalud.Models;
 using ClinicaSalud.Services;
 using ClinicaSalud.Utils;
 
+
+Dictionary<int, Patient> patientDictionary = new Dictionary<int, Patient>();
 List<Patient> patients = new List<Patient>();
 
-patients.Add(new Patient(12345678, "Juan", "Pérez", 30, "I have cancer"));
+var newPatient = new Patient(12345678, "Juan", "Pérez", 30, "I have cancer");
+patients.Add(newPatient);
+patientDictionary[newPatient.Id] = newPatient;
 
 bool exit = false;
 //Use a while loop so the menu repeats until the user chooses to exit.
@@ -48,6 +52,13 @@ while (!exit)
             break;
 
         case "5":
+            Console.WriteLine("\n-- Add Pet to Patient --");
+            PatientServices.AddPetToPatient(patients);
+            Menu.Pause();
+            break;
+
+        
+        case "6":
             Console.WriteLine("\n-- Exit --");
             exit = true;
             break;
