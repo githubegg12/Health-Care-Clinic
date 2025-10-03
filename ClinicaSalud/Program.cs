@@ -5,7 +5,7 @@ using ClinicaSalud.Utils;
 Dictionary<int, Patient> patientDictionary = new Dictionary<int, Patient>();
 List<Patient> patients = new List<Patient>();
 
-// Agrega todos los pacientes a ambos contenedores
+// Add all patients to both containers
 var newPatient = new Patient("Juan", "Pérez", 30, "I have cancer");
 var newPatient1 = new Patient("Juancho", "Pérez", 30, "I have cancer");
 var newPatient2 = new Patient("Juancha", "Pérez", 30, "I have cancer");
@@ -29,34 +29,34 @@ while (!exit)
     {
         case "1":
             Console.WriteLine("\n-- Patient Registration --");
-            PatientServices.PatientRegistration(patientDictionary, patients); // Pasamos ambos
+            PatientServices.PatientRegistration(patientDictionary, patients); // Pass both collections
             Menu.Pause();
             break;
 
         case "2":
             Console.WriteLine("\n-- Patient List --");
-            PatientServices.PatientList(patientDictionary); // Mostrar desde diccionario
+            PatientServices.PatientList(patientDictionary); // Show from dictionary
             Menu.Pause();
             break;
 
         case "3":
             Console.WriteLine("\n-- Patient Search--");
             string searchName = InputValidator.ReadNonEmptyString("Enter the name of the patient: ");
-            PatientServices.PatientSearch(patientDictionary, searchName); // Usar diccionario
+            PatientServices.PatientSearch(patientDictionary, searchName); // Use dictionary
             Menu.Pause();
             break;
 
         case "4":
             Console.WriteLine("\n-- Delete Patient --");
             string deleteName = InputValidator.ReadNonEmptyString("Enter the name of the patient to delete: ");
-            PatientServices.DeletePatient(patientDictionary, patients, deleteName); // Pasar ambos para sincronizar
+            PatientServices.DeletePatient(patientDictionary, patients, deleteName); // Pass both to keep in sync
             PatientServices.PatientList(patientDictionary);
             Menu.Pause();
             break;
 
         case "5":
             Console.WriteLine("\n-- Add Pet to Patient --");
-            PatientServices.AddPetToPatient(patientDictionary); // Buscar por Id en diccionario
+            PatientServices.AddPetToPatient(patientDictionary); // Search by Id in dictionary
             Menu.Pause();
             break;
 

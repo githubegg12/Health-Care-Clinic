@@ -26,8 +26,9 @@ public class PatientServices
                 string petName = InputValidator.ReadNonEmptyString("Enter Pet Name: ");
                 string species = InputValidator.ReadNonEmptyString("Enter Species: ");
                 int petAge = InputValidator.ReadNonNegativeInt("Enter Pet Age: ");
-
-                patient.Pets.Add(new Pet(petName, species, petAge));
+                string breed = InputValidator.ReadNonEmptyString("Enter Breed: ");
+                
+                patient.Pets.Add(new Pet(petName, species, petAge, breed ));
                 Console.Write("Add another pet? (Y/N): ");
                 string addAnother = Console.ReadLine();
                 addMorePets = addAnother != null && addAnother.Equals("Y", StringComparison.OrdinalIgnoreCase);
@@ -58,7 +59,7 @@ public class PatientServices
             {
                 Console.WriteLine($"  Pets:");
                 foreach (var pet in patient.Pets)
-                    Console.WriteLine($"    - {pet.Name}, {pet.Species}, {pet.Age} years old");
+                    Console.WriteLine($"    - {pet.Name}, {pet.Species}, {pet.Breed}, {pet.Age} years old");
             }
         }
     }
@@ -117,7 +118,7 @@ public class PatientServices
         }
     }
 
-    public static void AddPetToPatient(Dictionary<int, Patient> dict)
+    public static void AddPetToPatient(Dictionary<int, Patient> dict )
     {
         int id = InputValidator.ReadNonNegativeInt("Enter Patient ID: ");
         if (!dict.TryGetValue(id, out var patient))
@@ -128,8 +129,8 @@ public class PatientServices
         string petName = InputValidator.ReadNonEmptyString("Enter Pet Name: ");
         string species = InputValidator.ReadNonEmptyString("Enter Species: ");
         int petAge = InputValidator.ReadNonNegativeInt("Enter Pet Age: ");
-
-        patient.Pets.Add(new Pet(petName, species, petAge));
+        string breed = InputValidator.ReadNonEmptyString("Enter Breed: ");
+        patient.Pets.Add(new Pet(petName, species, petAge, breed));
         Console.WriteLine("Pet added successfully.");
     }
 }
