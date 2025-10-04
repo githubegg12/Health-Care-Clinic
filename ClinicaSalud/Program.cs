@@ -2,7 +2,7 @@
 using ClinicaSalud.Services;
 using ClinicaSalud.Utils;
 
-Dictionary<int, Patient> patientDictionary = new Dictionary<int, Patient>();
+Dictionary<Guid, Patient> patientDictionary = new Dictionary<Guid, Patient>();
 List<Patient> patients = new List<Patient>();
 
 // Add all patients to both containers
@@ -14,9 +14,9 @@ patients.Add(newPatient);
 patients.Add(newPatient1);
 patients.Add(newPatient2);
 
-patientDictionary[newPatient.Id] = newPatient;
-patientDictionary[newPatient1.Id] = newPatient1;
-patientDictionary[newPatient2.Id] = newPatient2;
+patientDictionary[newPatient.PatientId] = newPatient;
+patientDictionary[newPatient1.PatientId] = newPatient1;
+patientDictionary[newPatient2.PatientId] = newPatient2;
 
 bool exit = false;
 

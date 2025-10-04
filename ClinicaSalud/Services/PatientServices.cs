@@ -6,7 +6,7 @@ namespace ClinicaSalud.Services;
 public class PatientServices
 {
     //Request data through the console and add a new patient to the list.
-    public static void PatientRegistration(Dictionary<int, Patient> dict, List<Patient> list)
+    public static void PatientRegistration(Dictionary<Guid, Patient> dict, List<Patient> list)
     {
         string name = InputValidator.ReadNonEmptyString("Enter Name: ");
         string lastname = InputValidator.ReadNonEmptyString("Enter Lastname: ");
@@ -28,20 +28,20 @@ public class PatientServices
                 int petAge = InputValidator.ReadNonNegativeInt("Enter Pet Age: ");
                 string breed = InputValidator.ReadNonEmptyString("Enter Breed: ");
                 
-                patient.Pets.Add(new Pet(petName, species, petAge, breed ));
+                patient.Pets.Add(new Pet(petName, species, petAge, breed));
                 Console.Write("Add another pet? (Y/N): ");
                 string addAnother = Console.ReadLine();
                 addMorePets = addAnother != null && addAnother.Equals("Y", StringComparison.OrdinalIgnoreCase);
             }
         }
-        dict[patient.Id] = patient;
+        dict[patient.PatientId] = patient;
         list.Add(patient);
         Console.WriteLine("\nPatient registered successfully.");
     }
 
 
     //Display all patients in a formatted manner.
-    public static void PatientList(Dictionary<int, Patient> dict)
+    public static void PatientList(Dictionary<Guid, Patient> dict)
     {
         if (dict.Count == 0)
         {
@@ -50,22 +50,22 @@ public class PatientServices
         }
 
         Console.WriteLine("\n--- Registered Patients ---\n");
-        Console.WriteLine($"{"ID",-10} | {"Name",-15} | {"Lastname",-15} | {"Age",-5} | {"Symptom",-30}");
+        Console.WriteLine($"{"ID",-36} | {"Name",-15} | {"Lastname",-15} | {"Age",-5} | {"Symptom",-30}");
         Console.WriteLine(new string('-', 75));
         foreach (var patient in dict.Values)
         {
-            Console.WriteLine($"{patient.Id,-10} | {patient.Name,-15} | {patient.Lastname,-15} | {patient.Age,-5} | {patient.Symptom,-30}");
+            Console.WriteLine($"{patient.PatientId,-15} | {patient.Name,-15} | {patient.Lastname,-15} | {patient.PatientAge,-5} | {patient.Symptom,-30}");
             if (patient.Pets.Count > 0)
             {
                 Console.WriteLine($"  Pets:");
                 foreach (var pet in patient.Pets)
-                    Console.WriteLine($"    - {pet.Name}, {pet.Species}, {pet.Breed}, {pet.Age} years old");
+                    Console.WriteLine($"    - {pet.NamePet,-15} | {pet.Species,-15} | {pet.Breed,-15} | {pet.AgePet,-15} ");
             }
         }
     }
 
     //Search for patients by name and display their details.
-    public static void PatientSearch(Dictionary<int, Patient> dict, string name)
+    public static void PatientSearch(Dictionary<Guid, Patient> dict, string name)
     {
         var found = dict.Values
             .Where(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
@@ -78,17 +78,17 @@ public class PatientServices
         }
 
         Console.WriteLine($"\n--- Patients named '{name}' ---\n");
-        Console.WriteLine($"{"ID",-10} | {"Name",-15} | {"Lastname",-15} | {"Age",-5} | {"Symptom",-30}");
+        Console.WriteLine($"{"ID",-36} | {"Name",-15} | {"Lastname",-15} | {"Age",-5} | {"Symptom",-30}");
         Console.WriteLine(new string('-', 75));
         foreach (var patient in found)
         {
-            Console.WriteLine($"{patient.Id,-10} | {patient.Name,-15} | {patient.Lastname,-15} | {patient.Age,-5} | {patient.Symptom,-30}");
+            Console.WriteLine($"{patient.PatientId,-15} | {patient.Name,-15} | {patient.Lastname,-15} | {patient.PatientAge,-5} | {patient.Symptom,-30}");
         }
 
     }
 
     //Delete a patient by name after confirmation.
-    public static void DeletePatient(Dictionary<int, Patient> dict, List<Patient> list, string name)
+    public static void DeletePatient(Dictionary<Guid, Patient> dict, List<Patient> list, string name)
     {
         var found = dict.Values
             .Where(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
@@ -107,7 +107,7 @@ public class PatientServices
         {
             foreach (var patient in found)
             {
-                dict.Remove(patient.Id);
+                dict.Remove(patient.PatientId);
                 list.Remove(patient);
             }
             Console.WriteLine("\nPatient(s) deleted successfully.");
@@ -118,10 +118,10 @@ public class PatientServices
         }
     }
 
-    public static void AddPetToPatient(Dictionary<int, Patient> dict )
+    public static void AddPetToPatient(Dictionary<Guid, Patient> dict )
     {
-        int id = InputValidator.ReadNonNegativeInt("Enter Patient ID: ");
-        if (!dict.TryGetValue(id, out var patient))
+        Guid id = InputValidator.ReadGuid("Enter Patient ID: ");
+        if (!dict.TryGetValue(id, out Patient patient))
         {
             Console.WriteLine("Patient not found.");
             return;

@@ -32,4 +32,21 @@ public class InputValidator
             Console.WriteLine("Invalid input. Please enter a non-negative integer.");
         }
     }
+    
+    // Read a valid Guid from the console.
+    public static Guid ReadGuid(string prompt)
+    {
+        while (true)
+        {
+            Console.Write(prompt);
+            string input = Console.ReadLine();
+
+            if (Guid.TryParse(input, out Guid result))
+                return result;
+
+            Console.WriteLine("Invalid GUID format. Please enter a valid GUID.");
+        }
+    }
+
+    
 }
