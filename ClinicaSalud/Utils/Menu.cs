@@ -16,9 +16,10 @@ public static class Menu
             Console.WriteLine("1. Patient Registration");
             Console.WriteLine("2. Patient List");
             Console.WriteLine("3. Patient Search");
-            Console.WriteLine("4. Delete Patient");
-            Console.WriteLine("5. Add Pet to Patient");
-            Console.WriteLine("6. Exit \n");
+            Console.WriteLine("4. Patient update");
+            Console.WriteLine("5. Delete Patient");
+            Console.WriteLine("6. Add Pet to Patient");
+            Console.WriteLine("7. Exit \n");
 
             Console.Write("Select an option (1-6): ");
     }

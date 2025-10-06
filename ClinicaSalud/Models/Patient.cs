@@ -4,7 +4,7 @@ namespace ClinicaSalud.Models;
 public class Patient (string name, string lastname, int patientAge, string symptom)
 {
     //Use auto-implemented properties:
-    public Guid PatientId { get; set; } = Guid.NewGuid();
+    public Guid PatientId { get; private set; } = Guid.NewGuid();
     public string Name { get; set; } = name;
     public string Lastname { get; set; } = lastname;
     public int PatientAge { get; set; } = patientAge;

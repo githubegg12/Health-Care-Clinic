@@ -35,7 +35,7 @@ public class PatientServices
             }
         }
         dict[patient.PatientId] = patient;
-        list.Add(patient);
+       // list.Add(patient);
         Console.WriteLine("\nPatient registered successfully.");
     }
 
@@ -132,5 +132,40 @@ public class PatientServices
         string breed = InputValidator.ReadNonEmptyString("Enter Breed: ");
         patient.Pets.Add(new Pet(petName, species, petAge, breed));
         Console.WriteLine("Pet added successfully.");
+    }
+
+    public static void UpdatePatient(Dictionary<Guid, Patient> dict, Guid id)
+    {
+        if (!dict.TryGetValue(id, out Patient patient))
+        {
+            Console.WriteLine("\nPatient not found.");
+            return;
+        }
+
+        Console.WriteLine($"\n--- Updating Patient: {patient.Name} {patient.Lastname} ---\n");
+
+        Console.WriteLine("Leave input empty to keep current value.\n");
+
+        Console.Write($"Current Name: {patient.Name} | New Name: ");
+        string newName = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(newName))
+            patient.Name = newName;
+
+        Console.Write($"Current Lastname: {patient.Lastname} | New Lastname: ");
+        string newLastname = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(newLastname))
+            patient.Lastname = newLastname;
+
+        Console.Write($"Current Age: {patient.PatientAge} | New Age: ");
+        string newAgeInput = Console.ReadLine();
+        if (int.TryParse(newAgeInput, out int newAge))
+            patient.PatientAge = newAge;
+
+        Console.Write($"Current Symptom: {patient.Symptom} | New Symptom: ");
+        string newSymptom = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(newSymptom))
+            patient.Symptom = newSymptom;
+
+        Console.WriteLine("\nPatient updated successfully.");
     }
 }

@@ -45,8 +45,16 @@ while (!exit)
             PatientServices.PatientSearch(patientDictionary, searchName); // Use dictionary
             Menu.Pause();
             break;
-
+        
         case "4":
+            Console.WriteLine("\n-- Update Patient --");
+            PatientServices.PatientList(patientDictionary);
+            Guid updateId = InputValidator.ReadGuid("Enter the ID of the patient to update: ");
+            PatientServices.UpdatePatient(patientDictionary, updateId);
+            Menu.Pause();
+            break;
+        
+        case "5":
             Console.WriteLine("\n-- Delete Patient --");
             string deleteName = InputValidator.ReadNonEmptyString("Enter the name of the patient to delete: ");
             PatientServices.DeletePatient(patientDictionary, patients, deleteName); // Pass both to keep in sync
@@ -54,13 +62,13 @@ while (!exit)
             Menu.Pause();
             break;
 
-        case "5":
+        case "6":
             Console.WriteLine("\n-- Add Pet to Patient --");
             PatientServices.AddPetToPatient(patientDictionary); // Search by Id in dictionary
             Menu.Pause();
             break;
 
-        case "6":
+        case "7":
             Console.WriteLine("\n-- Exit --");
             exit = true;
             break;
