@@ -1,5 +1,6 @@
 
 
+using System.Text.RegularExpressions;
 using ClinicaSalud.Models;
 namespace ClinicaSalud.Services;
 
@@ -11,13 +12,12 @@ public class PatientServices
         string name = InputValidator.ReadNonEmptyString("Enter Name: ");
         string lastname = InputValidator.ReadNonEmptyString("Enter Lastname: ");
         int age = InputValidator.ReadNonNegativeInt("Enter Age: ");
-        string symptom = InputValidator.ReadNonEmptyString("Enter Symptom: ");
+        string address = InputValidator.ReadAlphanumericString("Enter address: ");
+        string email = InputValidator.ReadEmail("Enter email: ");
 
    
-        var patient = new Patient( name, lastname, age, symptom);
-        Console.Write("Do you want to add pets for this patient? (Y/N): ");
-        string addPetsResponse = Console.ReadLine();
-        if (!string.IsNullOrEmpty(addPetsResponse) && addPetsResponse.Equals("Y", StringComparison.OrdinalIgnoreCase)) 
+        var patient = new Patient( name, lastname, age, address, email);
+        if (InputValidator.ReadYesOrNo("Do you want to add pets for this patient? (Y/N): "))
         {
             Console.WriteLine("\n--- Add Pets ---");
             bool addMorePets = true;
@@ -27,11 +27,10 @@ public class PatientServices
                 string species = InputValidator.ReadNonEmptyString("Enter Species: ");
                 int petAge = InputValidator.ReadNonNegativeInt("Enter Pet Age: ");
                 string breed = InputValidator.ReadNonEmptyString("Enter Breed: ");
+                string symptom = InputValidator.ReadNonEmptyString("Enter Symptom: ");
                 
-                patient.Pets.Add(new Pet(petName, species, petAge, breed));
-                Console.Write("Add another pet? (Y/N): ");
-                string addAnother = Console.ReadLine();
-                addMorePets = addAnother != null && addAnother.Equals("Y", StringComparison.OrdinalIgnoreCase);
+                patient.Pets.Add(new Pet(petName, species, petAge, breed, symptom));
+                addMorePets = InputValidator.ReadYesOrNo("Add another pet? (Y/N): ");
             }
         }
         dict[patient.PatientId] = patient;
@@ -50,16 +49,16 @@ public class PatientServices
         }
 
         Console.WriteLine("\n--- Registered Patients ---\n");
-        Console.WriteLine($"{"ID",-36} | {"Name",-15} | {"Lastname",-15} | {"Age",-5} | {"Symptom",-30}");
-        Console.WriteLine(new string('-', 75));
+        Console.WriteLine($"{"ID",-36} | {"Name",-15} | {"Lastname",-15} | {"Age",-5} | {"Address",-25} | {"Email",-25}");
+        Console.WriteLine(new string('-', 140));
         foreach (var patient in dict.Values)
         {
-            Console.WriteLine($"{patient.PatientId,-15} | {patient.Name,-15} | {patient.Lastname,-15} | {patient.PatientAge,-5} | {patient.Symptom,-30}");
+            Console.WriteLine($"{patient.PatientId,-15} | {patient.PatientName,-15} | {patient.LastnamePatient,-15} | {patient.AgePatient,-5} | {patient.Address,-25} | {patient.Email,-25}");
             if (patient.Pets.Count > 0)
             {
                 Console.WriteLine($"  Pets:");
                 foreach (var pet in patient.Pets)
-                    Console.WriteLine($"    - {pet.NamePet,-15} | {pet.Species,-15} | {pet.Breed,-15} | {pet.AgePet,-15} ");
+                    Console.WriteLine($"    - {pet.PetName,-15} | {pet.Species,-15} | {pet.Breed,-15} | {pet.AgePet,-15} | {pet.Symptom,-15}");
             }
         }
     }
@@ -68,7 +67,7 @@ public class PatientServices
     public static void PatientSearch(Dictionary<Guid, Patient> dict, string name)
     {
         var found = dict.Values
-            .Where(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+            .Where(p => p.PatientName.Equals(name, StringComparison.OrdinalIgnoreCase))
             .ToList();
 
         if (found.Count == 0)
@@ -79,10 +78,10 @@ public class PatientServices
 
         Console.WriteLine($"\n--- Patients named '{name}' ---\n");
         Console.WriteLine($"{"ID",-36} | {"Name",-15} | {"Lastname",-15} | {"Age",-5} | {"Symptom",-30}");
-        Console.WriteLine(new string('-', 75));
+        Console.WriteLine(new string('-', 140));
         foreach (var patient in found)
         {
-            Console.WriteLine($"{patient.PatientId,-15} | {patient.Name,-15} | {patient.Lastname,-15} | {patient.PatientAge,-5} | {patient.Symptom,-30}");
+            Console.WriteLine($"{patient.PatientId,-15} | {patient.PatientName,-15} | {patient.LastnamePatient,-15} | {patient.AgePatient,-5} | {patient.Address,-30} | {patient.Email,-30}");
         }
 
     }
@@ -91,7 +90,7 @@ public class PatientServices
     public static void DeletePatient(Dictionary<Guid, Patient> dict, List<Patient> list, string name)
     {
         var found = dict.Values
-            .Where(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+            .Where(p => p.PatientName.Equals(name, StringComparison.OrdinalIgnoreCase))
             .ToList();
 
         if (found.Count == 0)
@@ -100,17 +99,14 @@ public class PatientServices
             return;
         }
 
-        Console.WriteLine("\nDo you want to delete these patient(s)? (Y/N): ");
-        string confirm = Console.ReadLine();
-
-        if (confirm != null && confirm.Equals("Y", StringComparison.OrdinalIgnoreCase))
+        if (InputValidator.ReadYesOrNo("Do you want to delete these patient(s)? (Y/N): "))
         {
             foreach (var patient in found)
             {
                 dict.Remove(patient.PatientId);
                 list.Remove(patient);
             }
-            Console.WriteLine("\nPatient(s) deleted successfully.");
+            Console.WriteLine("\nPatient deleted successfully.");
         }
         else
         {
@@ -130,7 +126,9 @@ public class PatientServices
         string species = InputValidator.ReadNonEmptyString("Enter Species: ");
         int petAge = InputValidator.ReadNonNegativeInt("Enter Pet Age: ");
         string breed = InputValidator.ReadNonEmptyString("Enter Breed: ");
-        patient.Pets.Add(new Pet(petName, species, petAge, breed));
+        string symptom = InputValidator.ReadNonEmptyString("Enter Symptom: ");
+        
+        patient.Pets.Add(new Pet(petName, species, petAge, breed, symptom));
         Console.WriteLine("Pet added successfully.");
     }
 
@@ -142,29 +140,40 @@ public class PatientServices
             return;
         }
 
-        Console.WriteLine($"\n--- Updating Patient: {patient.Name} {patient.Lastname} ---\n");
+        Console.WriteLine($"\n--- Updating Patient: {patient.PatientName} {patient.LastnamePatient} ---\n");
 
         Console.WriteLine("Leave input empty to keep current value.\n");
+        
+        string? newName = InputValidator.ReadOptionalValidatedString(
+            $"Current Name: {patient.PatientName} | New Name: ",
+                input => input.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)),
+                "Invalid name. Name not updated."
+            );
+        if (newName != null)
+            patient.PatientName = newName;
 
-        Console.Write($"Current Name: {patient.Name} | New Name: ");
-        string newName = Console.ReadLine();
-        if (!string.IsNullOrWhiteSpace(newName))
-            patient.Name = newName;
-
-        Console.Write($"Current Lastname: {patient.Lastname} | New Lastname: ");
+        Console.Write($"Current Lastname: {patient.LastnamePatient} | New Lastname: ");
         string newLastname = Console.ReadLine();
         if (!string.IsNullOrWhiteSpace(newLastname))
-            patient.Lastname = newLastname;
+            patient.LastnamePatient = newLastname;
 
-        Console.Write($"Current Age: {patient.PatientAge} | New Age: ");
+        Console.Write($"Current Age: {patient.AgePatient} | New Age: ");
         string newAgeInput = Console.ReadLine();
         if (int.TryParse(newAgeInput, out int newAge))
-            patient.PatientAge = newAge;
+            patient.AgePatient = newAge;
 
-        Console.Write($"Current Symptom: {patient.Symptom} | New Symptom: ");
-        string newSymptom = Console.ReadLine();
-        if (!string.IsNullOrWhiteSpace(newSymptom))
-            patient.Symptom = newSymptom;
+        Console.Write($"Current Address: {patient.Address} | New Address: ");
+        string newAddress = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(newAddress))
+            patient.Address = newAddress;
+        
+        string? newEmail = InputValidator.ReadOptionalValidatedString(
+            $"Current Email: {patient.Email} | New Email: ",
+            input => Regex.IsMatch(input, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"),
+            "Invalid email format. Email not updated."
+        );
+        if (newEmail != null)
+            patient.Email = newEmail;
 
         Console.WriteLine("\nPatient updated successfully.");
     }
