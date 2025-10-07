@@ -1,6 +1,7 @@
 
 
 using System.Text.RegularExpressions;
+using System.Xml.Schema;
 using ClinicaSalud.Models;
 namespace ClinicaSalud.Services;
 
@@ -29,7 +30,10 @@ public class PatientServices
                 string breed = InputValidator.ReadNonEmptyString("Enter Breed: ");
                 string symptom = InputValidator.ReadNonEmptyString("Enter Symptom: ");
                 
-                patient.Pets.Add(new Pet(petName, species, petAge, breed, symptom));
+                
+                var newPet = new Pet(petName, species, petAge, breed, symptom);
+                patient.Pets.Add(newPet);
+                newPet.MakeNoice();
                 addMorePets = InputValidator.ReadYesOrNo("Add another pet? (Y/N): ");
             }
         }

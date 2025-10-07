@@ -1,57 +1,18 @@
 namespace ClinicaSalud.Models;
 
-public class Pet
+public class Pet : Animal
 {
     // Private fields for pet data
-    private string _petName;
-    private string _species;
-    private int _agePet;
     private string _breed;
     private string _symptom;
 
     // Constructor to initialize a new pet
-    public Pet(string petName, string species, int agePet, string breed, string symptom)
+    public Pet(string petName, string species, int agePet, string breed, string symptom) : base(petName, species, agePet)
     {
-        _petName = petName;
-        _species = species;
-        _agePet = agePet;
         _breed = breed;
         _symptom = symptom;
     }
-
-    // Public property for Pet Name with validation
-    public string PetName
-    {
-        get => _petName;
-        set
-        {
-            if (!string.IsNullOrWhiteSpace(value))
-                _petName = value;
-        }
-    }
-
-    // Public property for Species with validation
-    public string Species
-    {
-        get => _species;
-        set
-        {
-            if (!string.IsNullOrWhiteSpace(value))
-                _species = value;
-        }
-    }
-
-    // Public property for Age with positive value check
-    public int AgePet
-    {
-        get => _agePet;
-        set
-        {
-            if (value > 0)
-                _agePet = value;
-        }
-    }
-
+    
     // Public property for Breed with validation
     public string Breed
     {
@@ -71,6 +32,27 @@ public class Pet
         {
             if (!string.IsNullOrWhiteSpace(value))
                 _symptom = value;
+        }
+    }
+
+    
+    // 
+    public override void MakeNoice()
+    {
+        switch (Species.ToLower())
+        {
+            case "perro":
+                Console.WriteLine($"{PetName} say: Guau!");
+                break;
+            case "gato":
+                Console.WriteLine($"{PetName} say: Miau!");
+                break;
+            case "pajaro":
+                Console.WriteLine($"{PetName} say: Pío!");
+                break;
+            default:
+                Console.WriteLine($"We could not identified {PetName}'s specie .");
+                break;
         }
     }
 }

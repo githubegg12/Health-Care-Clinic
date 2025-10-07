@@ -2,6 +2,20 @@
 using ClinicaSalud.Services;
 using ClinicaSalud.Utils;
 
+
+// List<Animal> mascotas = new List<Animal>
+// {
+//     new Pet("Firulais", "Perro", 5, "Labrador", "Tos"),
+//     new Pet("Michi", "Gato", 3, "Siames", "Estornudo"),
+//     new Pet("Piolín", "Pajaro", 2, "Canario", "Cansancio"),
+//     new Animal("AnimalX", "Desconocido", 4)
+// };
+//
+// foreach (var animal in mascotas)
+// {
+//     animal.MakeNoice(); // Polimorfismo: se ejecuta el método correspondiente
+// }
+
 Dictionary<Guid, Patient> patientDictionary = new Dictionary<Guid, Patient>();
 List<Patient> patients = new List<Patient>();
 
