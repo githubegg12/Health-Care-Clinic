@@ -43,42 +43,42 @@ while (!exit)
     {
         case "1":
             Console.WriteLine("\n-- Patient Registration --");
-            PatientServices.PatientRegistration(patientDictionary, patients); // Pass both collections
+            PatientService.PatientRegistration(patientDictionary, patients); // Pass both collections
             Menu.Pause();
             break;
 
         case "2":
             Console.WriteLine("\n-- Patient List --");
-            PatientServices.PatientList(patientDictionary); // Show from dictionary
+            PatientService.PatientList(patientDictionary); // Show from dictionary
             Menu.Pause();
             break;
 
         case "3":
             Console.WriteLine("\n-- Patient Search--");
             string searchName = InputValidator.ReadNonEmptyString("Enter the name of the patient: ");
-            PatientServices.PatientSearch(patientDictionary, searchName); // Use dictionary
+            PatientService.PatientSearch(patientDictionary, searchName); // Use dictionary
             Menu.Pause();
             break;
         
         case "4":
             Console.WriteLine("\n-- Update Patient --");
-            PatientServices.PatientList(patientDictionary);
+            PatientService.PatientList(patientDictionary);
             Guid updateId = InputValidator.ReadGuid("Enter the ID of the patient to update: ");
-            PatientServices.UpdatePatient(patientDictionary, updateId);
+            PatientService.UpdatePatient(patientDictionary, updateId);
             Menu.Pause();
             break;
         
         case "5":
             Console.WriteLine("\n-- Delete Patient --");
             string deleteName = InputValidator.ReadNonEmptyString("Enter the name of the patient to delete: ");
-            PatientServices.DeletePatient(patientDictionary, patients, deleteName); // Pass both to keep in sync
-            PatientServices.PatientList(patientDictionary);
+            PatientService.DeletePatient(patientDictionary, patients, deleteName); // Pass both to keep in sync
+            PatientService.PatientList(patientDictionary);
             Menu.Pause();
             break;
 
         case "6":
             Console.WriteLine("\n-- Add Pet to Patient --");
-            PatientServices.AddPetToPatient(patientDictionary); // Search by Id in dictionary
+            PatientService.AddPetToPatient(patientDictionary); // Search by Id in dictionary
             Menu.Pause();
             break;
 

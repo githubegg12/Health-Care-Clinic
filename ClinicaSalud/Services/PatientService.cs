@@ -5,7 +5,7 @@ using System.Xml.Schema;
 using ClinicaSalud.Models;
 namespace ClinicaSalud.Services;
 
-public class PatientServices
+public class PatientService
 {
     //Request data through the console and add a new patient to the list.
     public static void PatientRegistration(Dictionary<Guid, Patient> dict, List<Patient> list)
