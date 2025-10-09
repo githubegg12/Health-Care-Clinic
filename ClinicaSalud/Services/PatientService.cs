@@ -1,14 +1,13 @@
-
-
 using System.Text.RegularExpressions;
-using System.Xml.Schema;
 using ClinicaSalud.Models;
+using ClinicaSalud.Repositories;
+
 namespace ClinicaSalud.Services;
 
 public class PatientService
 {
     //Request data through the console and add a new patient to the list.
-    public static void PatientRegistration(Dictionary<Guid, Patient> dict, List<Patient> list)
+    public static void PatientRegistration()
     {
         string name = InputValidator.ReadNonEmptyString("Enter Name: ");
         string lastname = InputValidator.ReadNonEmptyString("Enter Lastname: ");
@@ -37,15 +36,18 @@ public class PatientService
                 addMorePets = InputValidator.ReadYesOrNo("Add another pet? (Y/N): ");
             }
         }
-        dict[patient.PatientId] = patient;
-       // list.Add(patient);
+        PatientRepository.AddPatient(patient);        
+        //dict[patient.PatientId] = patient;
+        //list.Add(patient);
         Console.WriteLine("\nPatient registered successfully.");
     }
 
 
     //Display all patients in a formatted manner.
-    public static void PatientList(Dictionary<Guid, Patient> dict)
+    public static void PatientList()
     {
+        var dict = PatientRepository.GetPatientDictionary();
+
         if (dict.Count == 0)
         {
             Console.WriteLine("\nNo patients registered.");
@@ -68,11 +70,12 @@ public class PatientService
     }
 
     //Search for patients by name and display their details.
-    public static void PatientSearch(Dictionary<Guid, Patient> dict, string name)
+    public static void PatientSearch(string name)
     {
-        var found = dict.Values
-            .Where(p => p.PatientName.Equals(name, StringComparison.OrdinalIgnoreCase))
-            .ToList();
+        var found = PatientRepository.SearchByName(name).ToList();
+        // var found = dict.Values
+        //     .Where(p => p.PatientName.Equals(name, StringComparison.OrdinalIgnoreCase))
+        //     .ToList();
 
         if (found.Count == 0)
         {
@@ -91,11 +94,12 @@ public class PatientService
     }
 
     //Delete a patient by name after confirmation.
-    public static void DeletePatient(Dictionary<Guid, Patient> dict, List<Patient> list, string name)
+    public static void DeletePatient(string name)
     {
-        var found = dict.Values
-            .Where(p => p.PatientName.Equals(name, StringComparison.OrdinalIgnoreCase))
-            .ToList();
+        var found = PatientRepository.SearchByName(name).ToList();
+        // var found = dict.Values
+        //     .Where(p => p.PatientName.Equals(name, StringComparison.OrdinalIgnoreCase))
+        //     .ToList();
 
         if (found.Count == 0)
         {
@@ -107,8 +111,9 @@ public class PatientService
         {
             foreach (var patient in found)
             {
-                dict.Remove(patient.PatientId);
-                list.Remove(patient);
+                PatientRepository.RemovePatient(patient);
+                // dict.Remove(patient.PatientId);
+                // list.Remove(patient);
             }
             Console.WriteLine("\nPatient deleted successfully.");
         }
@@ -117,28 +122,13 @@ public class PatientService
             Console.WriteLine("\nDeletion cancelled.");
         }
     }
+   //To add a pet into a specific patient
 
-    public static void AddPetToPatient(Dictionary<Guid, Patient> dict )
-    {
-        Guid id = InputValidator.ReadGuid("Enter Patient ID: ");
-        if (!dict.TryGetValue(id, out Patient patient))
-        {
-            Console.WriteLine("Patient not found.");
-            return;
-        }
-        string petName = InputValidator.ReadNonEmptyString("Enter Pet Name: ");
-        string species = InputValidator.ReadNonEmptyString("Enter Species: ");
-        int petAge = InputValidator.ReadNonNegativeInt("Enter Pet Age: ");
-        string breed = InputValidator.ReadNonEmptyString("Enter Breed: ");
-        string symptom = InputValidator.ReadNonEmptyString("Enter Symptom: ");
-        
-        patient.Pets.Add(new Pet(petName, species, petAge, breed, symptom));
-        Console.WriteLine("Pet added successfully.");
-    }
-
+    //To update Patient information
     public static void UpdatePatient(Dictionary<Guid, Patient> dict, Guid id)
     {
-        if (!dict.TryGetValue(id, out Patient patient))
+        var patient = PatientRepository.GetById(id);
+        if (patient == null)
         {
             Console.WriteLine("\nPatient not found.");
             return;

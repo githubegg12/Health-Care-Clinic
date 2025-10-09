@@ -2,13 +2,13 @@ namespace ClinicaSalud.Services;
 
 public abstract class VetService
 {
-    public string ServiceName { get; set; }
+    public string ServiceName { get; private set; }
 
     public VetService(string serviceName)
     {
         ServiceName = serviceName;
     }
 
-    // Método abstracto que obliga a las subclases a implementarlo
+    // Abstract method to force subclasses to use it
     public abstract void Atender();
 }

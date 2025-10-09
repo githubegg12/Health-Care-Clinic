@@ -3,15 +3,19 @@ namespace ClinicaSalud.Models;
 public class Pet : Animal
 {
     // Private fields for pet data
+    private Guid _petId;
     private string _breed;
     private string _symptom;
 
     // Constructor to initialize a new pet
     public Pet(string petName, string species, int agePet, string breed, string symptom) : base(petName, species, agePet)
     {
+        _petId = Guid.NewGuid();
         _breed = breed;
         _symptom = symptom;
     }
+
+    public Guid PetId => _petId;
     
     // Public property for Breed with validation
     public string Breed
@@ -34,8 +38,6 @@ public class Pet : Animal
                 _symptom = value;
         }
     }
-
-    
     // 
     public override void MakeNoice()
     {

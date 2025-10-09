@@ -1,8 +1,6 @@
-using ClinicaSalud.Models;
-using ClinicaSalud.Services;
 namespace ClinicaSalud.Utils;
 
-public static class Menu
+public static class MenuRegistrationView
 {
     //Display options on screen (e.g., 1. Register patient, 2. List patients, 3. Search patient, 4. Exit).
     public static void ShowMenu()
@@ -19,9 +17,12 @@ public static class Menu
             Console.WriteLine("4. Patient update");
             Console.WriteLine("5. Delete Patient");
             Console.WriteLine("6. Add Pet to Patient");
-            Console.WriteLine("7. Exit \n");
+            Console.WriteLine("7. Update Patient's Pet");
+            Console.WriteLine("8. Delete Patient's Pet");
+            Console.WriteLine("9. List All Pets (Grouped by Patient)");
+            Console.WriteLine("10. Exit\n");
 
-            Console.Write("Select an option (1-6): ");
+            Console.Write("Select an option (1-10): ");
     }
 
     public static void Pause()

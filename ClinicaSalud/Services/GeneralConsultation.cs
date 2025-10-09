@@ -2,9 +2,9 @@ namespace ClinicaSalud.Services;
 
 public class GeneralConsultation : VetService
 {
-    public GeneralConsultation() : base("General Consultation"){}
+    public GeneralConsultation() : base("General Consult"){}
     public override void Atender()
     {
-        Console.WriteLine("Realizando consulta general al paciente...");
+        Console.WriteLine("Doing a general consult to paciente...");
     }
 }
