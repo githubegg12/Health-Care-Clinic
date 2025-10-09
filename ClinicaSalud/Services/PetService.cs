@@ -1,3 +1,4 @@
+using ClinicaSalud.Interfaces;
 using ClinicaSalud.Models;
 using ClinicaSalud.Repositories;
 

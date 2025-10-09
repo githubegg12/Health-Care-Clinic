@@ -4,7 +4,7 @@ namespace ClinicaSalud;
 
 class Program
 {
-    static void Main(string[] args)
+    void Main(string[] args)
     {
         MenuService.Run();
     }

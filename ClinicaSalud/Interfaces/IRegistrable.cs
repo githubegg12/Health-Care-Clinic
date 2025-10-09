@@ -1,6 +1,8 @@
+using ClinicaSalud.Models;
+
 namespace ClinicaSalud.Interfaces;
 
-public interface IRegistrable
+public interface IRegistrable<T>
 {
-    void Register();
+    T Register(T patient);
 }

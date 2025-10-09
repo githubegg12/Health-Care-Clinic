@@ -1,11 +1,13 @@
 using System.Text.RegularExpressions;
+using ClinicaSalud.Interfaces;
 using ClinicaSalud.Models;
 using ClinicaSalud.Repositories;
 
 namespace ClinicaSalud.Services;
 
-public class PatientService
-{
+public class PatientService 
+{   
+    private static readonly IRegistrable<Patient> _registrable = new PatientRepository();
     //Request data through the console and add a new patient to the list.
     public static void PatientRegistration()
     {
@@ -36,7 +38,9 @@ public class PatientService
                 addMorePets = InputValidator.ReadYesOrNo("Add another pet? (Y/N): ");
             }
         }
-        PatientRepository.AddPatient(patient);        
+
+        _registrable.Register(patient);
+        //PatientRepository.AddPatient(patient);        
         //dict[patient.PatientId] = patient;
         //list.Add(patient);
         Console.WriteLine("\nPatient registered successfully.");
@@ -171,4 +175,5 @@ public class PatientService
 
         Console.WriteLine("\nPatient updated successfully.");
     }
+    
 }
