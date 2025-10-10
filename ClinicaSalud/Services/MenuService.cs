@@ -20,22 +20,27 @@ public class MenuService
                     MenuRegistrationView.ShowMenu();
                     Menu.Run();
                     break;
-
+                
                 case "2":
+                    MenuVeterinarianView.ShowVetMenu();
+                    MenuVeterinarian.Run();
+                    break;
+
+                case "3":
                     Console.WriteLine("\n-- General Consultation --");
                     VetService generalConsult = new GeneralConsultation();
                     generalConsult.Atender();
                     MenuServiceView.Pause();
                     break;
 
-                case "3":
+                case "4":
                     Console.WriteLine("\n-- Vaccination Service --");
                     VetService vaccination = new Vaccination(); 
                     vaccination.Atender(); 
                     MenuServiceView.Pause();
                     break;
 
-                case "4":
+                case "5":
                     Console.WriteLine("\nExiting system...");
                     exit = true;
                     break;

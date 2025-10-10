@@ -8,7 +8,6 @@ public abstract class VetService
     {
         ServiceName = serviceName;
     }
-
     // Abstract method to force subclasses to use it
     public abstract void Atender();
 }

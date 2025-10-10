@@ -40,7 +40,7 @@ public class Menu
                     Console.WriteLine("\n-- Update Patient --");
                     PatientService.PatientList();
                     Guid updateId = InputValidator.ReadGuid("Enter the ID of the patient to update: ");
-                    PatientService.UpdatePatient(Database.patientDictionary, updateId);
+                    PatientService.UpdatePatient(Database.PatientDictionary, updateId);
                     MenuRegistrationView.Pause();
                     break;
 

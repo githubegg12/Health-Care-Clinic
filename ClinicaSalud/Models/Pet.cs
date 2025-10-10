@@ -38,7 +38,7 @@ public class Pet : Animal
                 _symptom = value;
         }
     }
-    // 
+    // Method overrided 
     public override void MakeNoice()
     {
         switch (Species.ToLower())

@@ -7,7 +7,7 @@ public static class PatientLinqServices
     // Filter patients by minimum age
     public static IEnumerable<Patient> FilterByAge(Dictionary<int, Patient> dict, int minAge)
     {
-        return dict.Values.Where(p => p.AgePatient >= minAge);
+        return dict.Values.Where(p => p.Age >= minAge);
     }
 
     // Filter patients that have pets of a specific species
@@ -19,19 +19,19 @@ public static class PatientLinqServices
     // Project only patient names
     public static IEnumerable<string> GetPatientNames(Dictionary<int, Patient> dict)
     {
-        return dict.Values.Select(p => p.PatientName);
+        return dict.Values.Select(p => p.FirstName);
     }
 
     // Order patients by name ascending
     public static IEnumerable<Patient> OrderByName(Dictionary<int, Patient> dict)
     {
-        return dict.Values.OrderBy(p => p.PatientName);
+        return dict.Values.OrderBy(p => p.FirstName);
     }
 
     // Order patients by age descending
     public static IEnumerable<Patient> OrderByAgeDescending(Dictionary<int, Patient> dict)
     {
-        return dict.Values.OrderByDescending(p => p.AgePatient);
+        return dict.Values.OrderByDescending(p => p.Age);
     }
 
     // Group patients by pet species
@@ -48,13 +48,13 @@ public static class PatientLinqServices
     // Get the youngest patient
     public static Patient GetYoungestPatient(Dictionary<int, Patient> dict)
     {
-        return dict.Values.OrderBy(p => p.AgePatient).FirstOrDefault();
+        return dict.Values.OrderBy(p => p.Age).FirstOrDefault();
     }
 
     // Get the oldest patient
     public static Patient GetOldestPatient(Dictionary<int, Patient> dict)
     {
-        return dict.Values.OrderByDescending(p => p.AgePatient).FirstOrDefault();
+        return dict.Values.OrderByDescending(p => p.Age).FirstOrDefault();
     }
 
     // Count how many pets exist per species
@@ -76,7 +76,7 @@ public static class PatientLinqServices
     public static IEnumerable<string> GetPatientNamesUpperOrdered(Dictionary<int, Patient> dict)
     {
         return dict.Values
-            .Select(p => p.PatientName.ToUpper())
+            .Select(p => p.FirstName.ToUpper())
             .OrderBy(name => name);
     }
 }

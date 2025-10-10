@@ -11,9 +11,10 @@ public class MenuServiceView
 
         Console.WriteLine("Clinical Services Menu:\n");
         Console.WriteLine("1. Patient Registration");
-        Console.WriteLine("2. General Consultation");
-        Console.WriteLine("3. Vaccination");
-        Console.WriteLine("4. Exit\n");
+        Console.WriteLine("2. Veterinarian Registration");
+        Console.WriteLine("3. General Consultation");
+        Console.WriteLine("4. Vaccination");
+        Console.WriteLine("5. Exit\n");
 
         Console.Write("Select an option (1-4): ");
     }

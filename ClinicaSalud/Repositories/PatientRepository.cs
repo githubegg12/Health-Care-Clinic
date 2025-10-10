@@ -8,42 +8,31 @@ namespace ClinicaSalud.Repositories
     {
         public static Dictionary<Guid, Patient> GetPatientDictionary()
         {
-            return Database.patientDictionary;
+            return Database.PatientDictionary;
         }
-
-        // public List<Patient> GetPatients()
-        // {
-        //     return Database.patients;
-        // }
-
-        // public static void AddPatient(Patient patient)
-        // {
-        //     Database.patients.Add(patient);
-        //     Database.patientDictionary[patient.PatientId] = patient;
-        // }
 
         public static void RemovePatient(Patient patient)
         {
-            Database.patients.Remove(patient);
-            Database.patientDictionary.Remove(patient.PatientId);
+            Database.Patients.Remove(patient);
+            Database.PatientDictionary.Remove(patient.PatientId);
         }
 
         public static Patient? GetById(Guid id)
         {
-            return Database.patientDictionary.TryGetValue(id, out var patient) ? patient : null;
+            return Database.PatientDictionary.TryGetValue(id, out var patient) ? patient : null;
         }
 
         public static IEnumerable<Patient> SearchByName(string name)
         {
-            return Database.patientDictionary.Values
-                .Where(p => p.PatientName.Contains(name, StringComparison.OrdinalIgnoreCase));
+            return Database.PatientDictionary.Values
+                .Where(p => p.FirstName.Contains(name, StringComparison.OrdinalIgnoreCase));
         }
 
-        // ✅ Implementación de la interfaz IRegistrable
+        // Interface implementation 
         public Patient Register(Patient patient)
         {
-            Database.patients.Add(patient);
-            Database.patientDictionary[patient.PatientId] = patient;
+            Database.Patients.Add(patient);
+            Database.PatientDictionary[patient.PatientId] = patient;
             return patient;
         }
     }

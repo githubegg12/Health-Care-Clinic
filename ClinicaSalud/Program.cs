@@ -1,11 +1,6 @@
-﻿using ClinicaSalud.Services;
+﻿using ClinicaSalud.Data;
+using ClinicaSalud.Services;
 
-namespace ClinicaSalud;
+Database.Initializator();
+MenuService.Run();
 
-class Program
-{
-    void Main(string[] args)
-    {
-        MenuService.Run();
-    }
-}
