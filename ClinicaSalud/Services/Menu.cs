@@ -80,6 +80,7 @@ public class Menu
                 case "10":
                     Console.WriteLine("\n-- Exit --");
                     exit = true;
+                    MenuServiceView.ShowClinicMenu();
                     break;
 
                 default:

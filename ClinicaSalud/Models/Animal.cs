@@ -1,6 +1,6 @@
 namespace ClinicaSalud.Models;
 
-public class Animal
+public abstract class Animal
 {
     private string _petName;
     private string _species;

@@ -20,7 +20,7 @@ public static class MenuRegistrationView
             Console.WriteLine("7. Update Patient's Pet");
             Console.WriteLine("8. Delete Patient's Pet");
             Console.WriteLine("9. List All Pets (Grouped by Patient)");
-            Console.WriteLine("10. Exit\n");
+            Console.WriteLine("10. Back to Main Menu\n");
 
             Console.Write("Select an option (1-10): ");
     }

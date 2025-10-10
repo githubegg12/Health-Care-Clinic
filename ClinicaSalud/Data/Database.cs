@@ -10,6 +10,9 @@ public static class Database
     public static Dictionary<Guid, Veterinarian> VeterinarianDictionary = new();
     public static List<Veterinarian> Veterinarians = new();
 
+    //meter una  lista con las horas
+    //agregar la logica para que las citas sean despues del dia actual
+    // cuando se escoja la hora, lo resta para que no aparezca
     public static void Initializator()
     {
         // Add all patients to both containers
