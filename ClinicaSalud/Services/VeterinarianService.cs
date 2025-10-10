@@ -22,6 +22,8 @@ public static class VeterinarianService
 
             var vet = new Veterinarian(firstName, lastName, age, address, licensenumber, specialty, email);
             Registrable.Register(vet);
+            
+            AssignDefaultSlotsToVeterinarian(vet);
 
             Console.WriteLine("\nVeterinarian registered successfully.");
         }
@@ -154,4 +156,20 @@ public static class VeterinarianService
             Console.WriteLine("\nDeletion canceled by user.");
         }
     }
+    
+    public static void AssignDefaultSlotsToVeterinarian(Veterinarian vet)
+    {
+        for (int day = 0; day < 5; day++)
+        {
+            for (int hour = 8; hour < 17; hour++)
+            {
+                var slot = DateTime.Today.AddDays(day).AddHours(hour);
+                if (slot > DateTime.Now)
+                {
+                    vet.AddAvailableSlot(slot);
+                }
+            }
+        }
+    }
+
 }

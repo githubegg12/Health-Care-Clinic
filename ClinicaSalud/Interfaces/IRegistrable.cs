@@ -4,5 +4,5 @@ namespace ClinicaSalud.Interfaces;
 
 public interface IRegistrable<T>
 {
-    T Register(T patient);
+    T Register(T person);
 }

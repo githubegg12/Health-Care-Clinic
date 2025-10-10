@@ -1,10 +1,10 @@
+using ClinicaSalud.Interfaces;
+
 namespace ClinicaSalud.Services;
-public class Vaccination : VetService
+public class Vaccination : IVetService
 {
-    public Vaccination() : base("Vaccine"){}
-    public override void Atender()
+    public void Atender()
     {
         Console.WriteLine("Vaccination to patient...");
     }
-
 }

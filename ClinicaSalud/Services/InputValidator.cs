@@ -122,4 +122,19 @@ public class InputValidator
         Console.WriteLine(errorMessage);
         return null;
     }
+    public static DateTime ReadDateTime(string prompt)
+    {
+        while (true)
+        {
+            Console.Write($"{prompt} (format: yyyy-MM-dd HH:mm, type '{CancelKeyword}' to cancel): ");
+            string? input = Console.ReadLine();
+            CheckCancel(input);
+
+            if (DateTime.TryParse(input, out var result))
+                return result;
+
+            Console.WriteLine("Invalid date/time format. Please try again.");
+        }
+    }
+
 }

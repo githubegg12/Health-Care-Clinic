@@ -1,17 +1,18 @@
-
 using ClinicaSalud.Interfaces;
 using ClinicaSalud.Models;
+using ClinicaSalud.Data;
+
 
 namespace ClinicaSalud.Repositories;
 
-
 public class AppointmentRepository : IAppointment
 {
-    private readonly List<Appointment> _appointments = new();
+    // Use the centralized appointments list from Database
+    private List<Appointment> _appointments => Database.Appointments;
 
     public bool ScheduleAppointment(Appointment appointment)
     {
-        // Verificar que no hay solapamiento con otras citas del mismo veterinario
+        // Check for scheduling conflicts with other appointments for the same veterinarian
         bool hasConflict = _appointments.Any(a =>
             a.Veterinarian.VeterinarianId == appointment.Veterinarian.VeterinarianId &&
             a.StartTime < appointment.EndTime &&
@@ -19,7 +20,7 @@ public class AppointmentRepository : IAppointment
 
         if (hasConflict)
         {
-            return false; // No se puede agendar, hay conflicto de horario
+            return false; // Scheduling conflict exists
         }
 
         _appointments.Add(appointment);
@@ -49,5 +50,3 @@ public class AppointmentRepository : IAppointment
             .OrderBy(a => a.StartTime);
     }
 }
-
-

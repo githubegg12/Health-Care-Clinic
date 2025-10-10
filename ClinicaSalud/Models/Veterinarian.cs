@@ -5,6 +5,7 @@ public class Veterinarian : Person
     private Guid _veterinarianId;
     private string _licenseNumber;
     private string _specialty;
+    public List<DateTime> AvailableSlots { get; private set; } = new ();
 
     public Veterinarian(string firstName, string lastName, int age, string address, string licenseNumber, string specialty,
         string email) : base(firstName, lastName, age, address,email)
@@ -32,6 +33,26 @@ public class Veterinarian : Person
         {
             if (!string.IsNullOrWhiteSpace(value))
                 _specialty = value;
+        }
+    }
+    
+    // public void AddAvailableSlot(DateTime slot)
+    // {
+    //     // Add only future slots
+    //     if (slot > DateTime.Now && !AvailableSlots.Contains(slot))
+    //         AvailableSlots.Add(slot);
+    // }
+
+    // public void RemoveAvailableSlot(DateTime slot)
+    // {
+    //     if (AvailableSlots.Contains(slot))
+    //         AvailableSlots.Remove(slot);
+    // }
+    public void AddAvailableSlot(DateTime slot)
+    {
+        if (!AvailableSlots.Contains(slot))
+        {
+            AvailableSlots.Add(slot);
         }
     }
 }

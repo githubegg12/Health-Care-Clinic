@@ -9,7 +9,6 @@ public class VeterinarianRepository : IRegistrable<Veterinarian>
     
     private IRegistrable<Patient> _registrableImplementation;
     
-    
     public static Dictionary<Guid, Veterinarian> GetVeterinarianDictionary()
     {
         return Database.VeterinarianDictionary;
