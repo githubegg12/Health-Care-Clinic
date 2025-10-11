@@ -1,41 +1,42 @@
 
+using System.Collections;
 using ClinicaSalud.Models;
 
 namespace ClinicaSalud.Services;
 public static class PatientLinqServices
 {
     // Filter patients by minimum age
-    public static IEnumerable<Patient> FilterByAge(Dictionary<int, Patient> dict, int minAge)
+    public static IEnumerable FilterByAge(Dictionary<int, Patient> dict, int minAge)
     {
         return dict.Values.Where(p => p.Age >= minAge);
     }
 
     // Filter patients that have pets of a specific species
-    public static IEnumerable<Patient> FilterByPetSpecies(Dictionary<int, Patient> dict, string species)
+    public static IEnumerable FilterByPetSpecies(Dictionary<int, Patient> dict, string species)
     {
         return dict.Values.Where(p => p.Pets.Any(pet => pet.Species.Equals(species, StringComparison.OrdinalIgnoreCase)));
     }
 
     // Project only patient names
-    public static IEnumerable<string> GetPatientNames(Dictionary<int, Patient> dict)
+    public static IEnumerable GetPatientNames(Dictionary<int, Patient> dict)
     {
         return dict.Values.Select(p => p.FirstName);
     }
 
     // Order patients by name ascending
-    public static IEnumerable<Patient> OrderByName(Dictionary<int, Patient> dict)
+    public static IEnumerable OrderByName(Dictionary<int, Patient> dict)
     {
         return dict.Values.OrderBy(p => p.FirstName);
     }
 
     // Order patients by age descending
-    public static IEnumerable<Patient> OrderByAgeDescending(Dictionary<int, Patient> dict)
+    public static IEnumerable OrderByAgeDescending(Dictionary<int, Patient> dict)
     {
         return dict.Values.OrderByDescending(p => p.Age);
     }
 
     // Group patients by pet species
-    public static IEnumerable<IGrouping<string, Patient>> GroupByPetSpecies(Dictionary<int, Patient> dict)
+    public static IEnumerable GroupByPetSpecies(Dictionary<int, Patient> dict)
     {
         // Project patient-pet pairs and group by species
         var query = dict.Values
@@ -58,7 +59,7 @@ public static class PatientLinqServices
     }
 
     // Count how many pets exist per species
-    public static IEnumerable<(string Species, int Count)> CountPetsBySpecies(Dictionary<int, Patient> dict)
+    public static IEnumerable CountPetsBySpecies(Dictionary<int, Patient> dict)
     {
         return dict.Values
             .SelectMany(p => p.Pets)
@@ -73,7 +74,7 @@ public static class PatientLinqServices
     }
 
     // List all patient names in uppercase, ordered alphabetically
-    public static IEnumerable<string> GetPatientNamesUpperOrdered(Dictionary<int, Patient> dict)
+    public static IEnumerable GetPatientNamesUpperOrdered(Dictionary<int, Patient> dict)
     {
         return dict.Values
             .Select(p => p.FirstName.ToUpper())

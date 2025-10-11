@@ -3,17 +3,20 @@ using ClinicaSalud.Repositories;
 using ClinicaSalud.Data;
 
 namespace ClinicaSalud.Services;
-
+// AppointmentService class is responsible for handling the appointment logic,
+// including getting available slots, scheduling, updating, and canceling appointments.
 public class AppointmentService
 {
+    // Private field to store the instance of the appointment repository for accessing appointment data.
     private readonly AppointmentRepository _appointmentRepository;
-
+    // Constructor to initialize the AppointmentService with the appointment repository.
     public AppointmentService(AppointmentRepository appointmentRepository)
     {
         _appointmentRepository = appointmentRepository;
     }
 
-    // Get available slots for a veterinarian (based on their available slots and existing appointments)
+    // Method to get available slots for a given veterinarian.
+    // It checks the vet's available slots and removes any that are already booked or in the past.
     public List<DateTime> GetAvailableSlots(Guid veterinarianId)
     {
         var vet = Database.VeterinarianDictionary[veterinarianId];
@@ -53,17 +56,18 @@ public class AppointmentService
 
         return _appointmentRepository.ScheduleAppointment(appointment);
     }
-
+    // Method to display all scheduled appointments in the system.
     public void ShowAllAppointments()
     {
+        // Retrieve all appointments from the database.
         var appointments = Database.Appointments;
-
+        // Check if there are no appointments scheduled.
         if (appointments.Count == 0)
         {
             Console.WriteLine("\nNo appointments scheduled.");
             return;
         }
-
+        // Display a header for the appointments list.
         Console.WriteLine("\n--- All Scheduled Appointments ---\n");
         Console.WriteLine(
             $"{"Appointment ID",-36} | {"Vet Name",-25} | {"Pet Name",-15} | {"Start Time",-20} | {"End Time",-20}");
@@ -71,6 +75,7 @@ public class AppointmentService
 
         foreach (var appt in appointments)
         {
+            // Get the veterinarian and pet names and appointment times.
             string vetName = $"{appt.Veterinarian.FirstName} {appt.Veterinarian.LastName}";
             string petName = appt.Pet.PetName;
             string start = appt.StartTime.ToString("g");
@@ -79,6 +84,7 @@ public class AppointmentService
             Console.WriteLine($"{appt.AppointmentId,-36} | {vetName,-25} | {petName,-15} | {start,-20} | {end,-20}");
         }
     }
+    // Method to update an existing appointment.
     public void UpdateAppointment()
     {
         try
@@ -92,10 +98,10 @@ public class AppointmentService
                 Console.WriteLine("Appointment not found.");
                 return;
             }
-
+            // Calculate the new end time based on the new start time (1-hour duration).
             var newEndTime = newStartTime.AddHours(1);
 
-            // Check for scheduling conflict
+            // Check if there are any scheduling conflicts for the new appointment time.
             bool hasConflict = Database.Appointments.Any(a =>
                 a.AppointmentId != appointmentId &&
                 a.Veterinarian.VeterinarianId == appointment.Veterinarian.VeterinarianId &&
@@ -107,24 +113,26 @@ public class AppointmentService
                 Console.WriteLine("Scheduling conflict detected at the new time.");
                 return;
             }
-
+            // Update the appointment's start and end times with the new values.
             appointment.StartTime = newStartTime;
             appointment.EndTime = newEndTime;
 
             Console.WriteLine("Appointment updated successfully.");
         }
+        // Handle the case where the user cancels the operation.
         catch (OperationCanceledException)
         {
             Console.WriteLine("Appointment update canceled by user.");
         }
     }
-
+    // Method to cancel an existing appointment.
     public void CancelAppointment()
     {
         try
         {
             var appointmentId = InputValidator.ReadGuid("Enter Appointment ID to cancel");
-
+            
+            // Attempt to cancel the appointment by ID in the repository.
             var result = _appointmentRepository.CancelAppointment(appointmentId);
             if (result)
                 Console.WriteLine("Appointment canceled successfully.");

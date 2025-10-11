@@ -21,7 +21,7 @@ public class PatientService
             string email = InputValidator.ReadEmail("Enter email: ");
 
             var patient = new Patient(name, lastname, age, address, email);
-
+            // Optionally add pets to the patient
             if (InputValidator.ReadYesOrNo("Do you want to add pets for this patient? (Y/N): "))
             {
                 Console.WriteLine("\n--- Add Pets ---");
@@ -35,13 +35,13 @@ public class PatientService
                     string symptom = InputValidator.ReadNonEmptyString("Enter Symptom: ");
 
                     var newPet = new Pet(petName, species, petAge, breed, symptom);
-                    patient.Pets.Add(newPet);
-                    newPet.MakeNoice();
+                    patient.Pets.Add(newPet);// Save the pet 
+                    newPet.MakeNoice();// Pet makes a noise on creation (optional feedback)
                     addMorePets = InputValidator.ReadYesOrNo("Add another pet? (Y/N): ");
                 }
             }
 
-            _registrable.Register(patient);
+            _registrable.Register(patient);// Save the patient using the repository
             Console.WriteLine("\nPatient registered successfully.");
         }
         catch (OperationCanceledException)

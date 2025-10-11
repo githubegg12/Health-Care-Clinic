@@ -58,7 +58,7 @@ public class PetService
                 Console.WriteLine("This patient has no pets.");
                 return;
             }
-
+            // Display all pets for the patient with their IDs and species
             Console.WriteLine("Pets:");
             foreach (var pet in patient.Pets)
             {
@@ -75,7 +75,7 @@ public class PetService
             }
 
             Console.WriteLine($"Updating pet: {petToUpdate.PetName}");
-
+            // Update fields if new valid input is provided, else keep current values
             string? newName = InputValidator.ReadOptionalValidatedString("New Pet Name: ",
                 input => input.All(char.IsLetter), "Invalid name.");
             if (newName != null) petToUpdate.PetName = newName;
@@ -126,7 +126,7 @@ public class PetService
                 Console.WriteLine("This patient has no pets.");
                 return;
             }
-
+            // Show all pets to allow user to select one for deletion
             Console.WriteLine("Pets:");
             foreach (var pet in patient.Pets)
             {
@@ -141,7 +141,7 @@ public class PetService
                 Console.WriteLine("Pet not found.");
                 return;
             }
-
+            // Confirm deletion before removing
             if (InputValidator.ReadYesOrNo($"Are you sure you want to delete {petToDelete.PetName}? (Y/N): "))
             {
                 patient.Pets.Remove(petToDelete);
@@ -177,7 +177,7 @@ public class PetService
 
             anyPets = true;
             Console.WriteLine($"Patient: {patient.FirstName} {patient.LastName}");
-
+            // Display pet details for each pet of the patient
             foreach (var pet in patient.Pets)
             {
                 Console.WriteLine($"  Pet ID: {pet.PetId}");

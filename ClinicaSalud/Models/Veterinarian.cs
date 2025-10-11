@@ -36,18 +36,6 @@ public class Veterinarian : Person
         }
     }
     
-    // public void AddAvailableSlot(DateTime slot)
-    // {
-    //     // Add only future slots
-    //     if (slot > DateTime.Now && !AvailableSlots.Contains(slot))
-    //         AvailableSlots.Add(slot);
-    // }
-
-    // public void RemoveAvailableSlot(DateTime slot)
-    // {
-    //     if (AvailableSlots.Contains(slot))
-    //         AvailableSlots.Remove(slot);
-    // }
     public void AddAvailableSlot(DateTime slot)
     {
         if (!AvailableSlots.Contains(slot))

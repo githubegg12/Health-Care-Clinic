@@ -1,11 +1,14 @@
 namespace ClinicaSalud.Models;
 
+
+// Abstract base class representing a generic animal (pet)
 public abstract class Animal
 {
     private string _petName;
     private string _species;
     private int _agePet;
 
+    // Constructor to initialize the animal with name, species, and age
     public Animal(string petName, string species, int agePet)
     {
         PetName = petName;
@@ -45,7 +48,7 @@ public abstract class Animal
                 _agePet = value;
         }
     }
-    
+    // Virtual method that can be overridden by subclasses to produce a specific sound
     public virtual void MakeNoice()
     {
         Console.WriteLine($"{PetName} hace un sonido genérico.");

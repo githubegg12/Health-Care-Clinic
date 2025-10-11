@@ -1,8 +1,8 @@
 namespace ClinicaSalud.Models;
-
+// Abstract base class representing a person
 public abstract class Person
 {
-    // Private fields
+    // Private fields to store person data
     private string _firstName;
     private string _lastName;
     private int _age;

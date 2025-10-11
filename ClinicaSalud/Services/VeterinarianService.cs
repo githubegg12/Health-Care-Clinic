@@ -6,8 +6,11 @@ namespace ClinicaSalud.Services;
 
 public static class VeterinarianService
 {
+    // Repository instance to handle Veterinarian registration
     private static readonly IRegistrable<Veterinarian> Registrable = new VeterinarianRepository();
 
+    // Handles the registration of a new veterinarian by collecting user input
+    // Then registers the veterinarian and assigns default available appointment slots
     public static void RegisterVeterinarian()
     {
         try
@@ -23,6 +26,7 @@ public static class VeterinarianService
             var vet = new Veterinarian(firstName, lastName, age, address, licensenumber, specialty, email);
             Registrable.Register(vet);
             
+            // Assign default available time slots for the new veterinarian
             AssignDefaultSlotsToVeterinarian(vet);
 
             Console.WriteLine("\nVeterinarian registered successfully.");
@@ -32,7 +36,7 @@ public static class VeterinarianService
             Console.WriteLine("\nRegistration canceled by user.");
         }
     }
-
+    // Lists all registered veterinarians in a formatted table
     public static void ListVeterinarians()
     {
         var vets = VeterinarianRepository.GetVeterinarianDictionary();
@@ -51,7 +55,7 @@ public static class VeterinarianService
             Console.WriteLine($"{vet.VeterinarianId,-36} | {vet.FirstName,-15} | {vet.LastName,-15} | {vet.Age,-5} | {vet.Address,-20} | {vet.Specialty,-20} | {vet.Email,-25}");
         }
     }
-
+    // Searches veterinarians by name and displays the search results
     public static void SearchVeterinarian()
     {
         try
@@ -80,7 +84,8 @@ public static class VeterinarianService
             Console.WriteLine("\nSearch canceled by user.");
         }
     }
-
+    // Allows updating the details of an existing veterinarian
+    // User can leave fields blank to keep current values
     public static void UpdateVeterinarian()
     {
         try
@@ -127,7 +132,7 @@ public static class VeterinarianService
             Console.WriteLine("\nUpdate canceled by user.");
         }
     }
-
+    // Deletes a veterinarian after confirming with the user
     public static void DeleteVeterinarian()
     {
         try
@@ -156,7 +161,7 @@ public static class VeterinarianService
             Console.WriteLine("\nDeletion canceled by user.");
         }
     }
-    
+    // Assigns default available appointment slots to a veterinarian for the next 5 days (Monday to Friday, 8AM to 4PM)
     public static void AssignDefaultSlotsToVeterinarian(Veterinarian vet)
     {
         for (int day = 0; day < 5; day++)
@@ -164,6 +169,7 @@ public static class VeterinarianService
             for (int hour = 8; hour < 17; hour++)
             {
                 var slot = DateTime.Today.AddDays(day).AddHours(hour);
+                // Only add slots that are in the future
                 if (slot > DateTime.Now)
                 {
                     vet.AddAvailableSlot(slot);

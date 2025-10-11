@@ -38,7 +38,7 @@ public class Pet : Animal
                 _symptom = value;
         }
     }
-    // Method overrided 
+    // Override the base method to make noise based on the pet's species
     public override void MakeNoice()
     {
         switch (Species.ToLower())
