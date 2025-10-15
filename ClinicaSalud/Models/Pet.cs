@@ -1,9 +1,60 @@
 namespace ClinicaSalud.Models;
 
-public class Pet(string petName, string species, int petAge, string breed)
+public class Pet : Animal
 {
-    public string Name { get; set; } = petName;
-    public string Species { get; set; } = species;
-    public int Age { get; set; } = petAge;
-    public string Breed { get; set; } = breed;
-}    
+    // Private fields for pet data
+    private Guid _petId;
+    private string _breed;
+    private string _symptom;
+
+    // Constructor to initialize a new pet
+    public Pet(string petName, string species, int agePet, string breed, string symptom) : base(petName, species, agePet)
+    {
+        _petId = Guid.NewGuid();
+        _breed = breed;
+        _symptom = symptom;
+    }
+
+    public Guid PetId => _petId;
+    
+    // Public property for Breed with validation
+    public string Breed
+    {
+        get => _breed;
+        set
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+                _breed = value;
+        }
+    }
+
+    // Public property for Symptom with validation
+    public string Symptom
+    {
+        get => _symptom;
+        set
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+                _symptom = value;
+        }
+    }
+    // Override the base method to make noise based on the pet's species
+    public override void MakeNoice()
+    {
+        switch (Species.ToLower())
+        {
+            case "perro":
+                Console.WriteLine($"{PetName} say: Guau!");
+                break;
+            case "gato":
+                Console.WriteLine($"{PetName} say: Miau!");
+                break;
+            case "pajaro":
+                Console.WriteLine($"{PetName} say: Pío!");
+                break;
+            default:
+                Console.WriteLine($"We could not identified {PetName}'s specie .");
+                break;
+        }
+    }
+}

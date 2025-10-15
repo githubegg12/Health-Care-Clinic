@@ -1,26 +1,20 @@
 namespace ClinicaSalud.Models;
-
-//Include basic properties: Id (int), Name (string), Age (int), Symptom (string).
-public class Patient 
+// Represents a patient, inheriting from Person
+public class Patient : Person
 {
-    
-    //Use auto-implemented properties:
-    private static int _nextId = 0;
-    public int Id { get; set; } 
-    public string Name { get; set; } 
-    public string? Lastname { get; set; } 
-    public int Age { get; set; } 
-    public string Symptom { get; set; } 
-    public List<Pet> Pets { get; set; } = new();
+    private Guid _patientId;
 
-    public Patient(string name, string lastname, int age, string symptom)
+    // Constructor initializes patient details and creates a new unique ID
+    // Also initializes the list of pets for this patient
+    public Patient(string firstName, string lastName, int age, string address, string email)
+        : base(firstName, lastName, age, address, email)
     {
-        _nextId++;
-        Id= _nextId;
-        Name= name;
-        Lastname= lastname;
-        Age= age;
-        Symptom= symptom;
+        _patientId = Guid.NewGuid();
+        Pets = new List<Pet>();
     }
-}
 
+    public Guid PatientId => _patientId;
+
+    public List<Pet> Pets { get; private set; }
+    
+}
