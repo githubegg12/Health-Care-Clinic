@@ -19,7 +19,7 @@ public class MenuServiceView
         Console.WriteLine("7. Vaccination");
         Console.WriteLine("8. Exit\n");
 
-        Console.Write("Select an option (1-4): ");
+        Console.Write("Select an option (1-8): ");
     }
 
     public static void Pause()
